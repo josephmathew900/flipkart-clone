@@ -1,0 +1,23 @@
+{
+  "name": "ecommerce-back-end",
+  "version": "1.0.0",
+  "description": "This is backend of ecommerce flipkart clone project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/index.server.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "mern",
+    "backend",
+    "api"
+  ],
+  "author": "Joseph Mathew",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "mongoose": "^5.12.9"
+  }
+}
