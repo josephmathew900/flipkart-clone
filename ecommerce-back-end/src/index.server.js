@@ -2,7 +2,7 @@ const env = require('dotenv');
 const express = require('express');
 const mongoose = require('mongoose');
 
-const userRoutes = require('./routes/user');
+const authRoutes = require('./routes/admin/auth');
 
 env.config();
 
@@ -18,7 +18,7 @@ mongoose
 const app = express();
 
 app.use(express.json());
-app.use('/api', userRoutes);
+app.use('/api', authRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
