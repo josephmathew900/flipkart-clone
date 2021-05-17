@@ -6,35 +6,30 @@ exports.addItemToCart = (req, res) => {
     if (cart) {
       const product = req.body.cartItems.product;
       const item = cart.cartItems.find((c) => c.product == product);
+      let condition, update;
 
       if (item) {
-        Cart.findOneAndUpdate(
-          { user: req.user._id, 'cartItems.product': product },
-          {
-            $set: {
-              'cartItems.$': {
-                ...req.body.cartItems,
-                quantity: item.quantity + req.body.cartItems.quantity,
-              },
+        condition = { user: req.user._id, 'cartItems.product': product };
+        update = {
+          $set: {
+            'cartItems.$': {
+              ...req.body.cartItems,
+              quantity: item.quantity + req.body.cartItems.quantity,
             },
-          }
-        ).exec((error, cart) => {
-          if (error) return res.status(400).json({ error });
-          return res.status(201).json({ cart });
-        });
+          },
+        };
       } else {
-        Cart.findOneAndUpdate(
-          { user: req.user._id },
-          {
-            $push: {
-              cartItems: req.body.cartItems,
-            },
-          }
-        ).exec((error, cart) => {
-          if (error) return res.status(400).json({ error });
-          return res.status(201).json({ cart });
-        });
+        condition = { user: req.user._id };
+        update = {
+          $push: {
+            cartItems: req.body.cartItems,
+          },
+        };
       }
+      Cart.findOneAndUpdate(condition, update).exec((error, cart) => {
+        if (error) return res.status(400).json({ error });
+        return res.status(201).json({ cart });
+      });
     } else {
       const cart = new Cart({
         user: req.user._id,
