@@ -36,6 +36,9 @@ const reducer = (state = initialState, action) => {
         authenticate: false,
       };
       break;
+    case authConstants.LOGOUT_REQUEST:
+      state = { ...initialState };
+      break;
   }
 
   return state;

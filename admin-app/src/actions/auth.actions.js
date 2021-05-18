@@ -19,7 +19,7 @@ export const login = (user) => {
         },
       });
     } else {
-      if (res.status === 4000)
+      if (res.status === 400)
         dispatch({
           type: authConstants.LOGIN_FAILURE,
           payload: res.data.error,
@@ -46,5 +46,12 @@ export const isUserLoggedIn = () => {
         payload: { error: 'Failed to Login' },
       });
     }
+  };
+};
+
+export const signout = () => {
+  return async (dispatch) => {
+    localStorage.clear();
+    dispatch({ type: authConstants.LOGOUT_REQUEST });
   };
 };
