@@ -1,9 +1,45 @@
+import { addCategory } from '../actions';
 import { categoryConstants } from '../actions/constants';
 
 const initialState = {
   categories: [],
   error: null,
   loading: false,
+};
+
+const buildNewCategories = (parentId, categories, category) => {
+  let myCategories = [];
+  for (let cat of categories) {
+    if (cat._id == parentId) {
+      myCategories.push({
+        ...cat,
+        children: buildNewCategories(
+          parentId,
+          [
+            ...cat.children,
+            {
+              _id: category._id,
+              name: category.name,
+              slug: category.slug,
+              parentId: category.parentId,
+              children: category.children,
+            },
+          ],
+          category
+        ),
+      });
+    } else {
+      myCategories.push({
+        ...cat,
+        children:
+          cat.children && cat.children.length > 0
+            ? buildNewCategories(parentId, cat.children, category)
+            : [],
+      });
+    }
+  }
+
+  return myCategories;
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -25,7 +61,17 @@ const categoryReducer = (state = initialState, action) => {
       state = { ...state, loading: true };
       break;
     case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
-      state = { ...state, loading: false };
+      const category = action.payload.category;
+      const updatedCategories = buildNewCategories(
+        category.parentId,
+        state.categories,
+        category
+      );
+      state = {
+        ...state,
+        loading: false,
+        categories: updatedCategories,
+      };
       break;
     case categoryConstants.ADD_NEW_CATEGORY_FAILURE:
       state = { ...initialState };
