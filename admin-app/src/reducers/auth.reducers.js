@@ -15,7 +15,7 @@ const initialState = {
   message: '',
 };
 
-const reducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case authConstants.LOGIN_REQUEST:
       state = {
@@ -61,4 +61,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export default reducer;
+export default authReducer;

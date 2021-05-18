@@ -6,7 +6,7 @@ const initialState = {
   loading: false,
 };
 
-const reducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case userConstants.USER_REGISTRATION_REQUEST:
       state = { ...state, loading: true };
@@ -22,4 +22,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export default reducer;
+export default userReducer;
