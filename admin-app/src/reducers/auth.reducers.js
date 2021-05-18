@@ -10,6 +10,9 @@ const initialState = {
   },
   authenticate: false,
   authenticating: false,
+  loading: false,
+  error: '',
+  message: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,7 +40,21 @@ const reducer = (state = initialState, action) => {
       };
       break;
     case authConstants.LOGOUT_REQUEST:
-      state = { ...initialState };
+      state = { ...initialState, loading: true };
+      break;
+    case authConstants.LOGOUT_SUCCESS:
+      state = {
+        ...initialState,
+        loading: false,
+        message: action.payload.message,
+      };
+      break;
+    case authConstants.LOGOUT_FAILURE:
+      state = {
+        ...initialState,
+        loading: false,
+        error: action.payload.error,
+      };
       break;
   }
 
