@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Layout from '../../components/Layout';
 import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, getAllCategory } from '../../actions';
+import { addCategory } from '../../actions';
 import Input from '../../components/UI/Input';
 
 const Category = (props) => {
@@ -14,10 +14,6 @@ const Category = (props) => {
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllCategory());
-  }, []);
-
   const handleClose = () => {
     setShow(false);
     const form = new FormData();
@@ -25,6 +21,8 @@ const Category = (props) => {
     form.append('parentId', parentCategoryId);
     form.append('categoryImage', categoryImage);
     dispatch(addCategory(form));
+    setCategoryName('');
+    setParentCategoryId('');
   };
   const handleShow = () => setShow(true);
 

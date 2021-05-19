@@ -8,6 +8,10 @@
   box-shadow: inset 0 0 2px grey;
 }
 
+.sidebar a {
+  display: block;
+}
+
 .sidebar ul {
   margin: 0;
   padding: 0;
