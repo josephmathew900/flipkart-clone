@@ -1,12 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header';
-import MenuHeader from '../../components/Header/MenuHeader';
+import Layout from '../../components/Layout';
 
 const HomePage = (props) => {
   return (
     <div>
-      <Header />
-      <MenuHeader />
+      <Layout>HomePage</Layout>
     </div>
   );
 };
