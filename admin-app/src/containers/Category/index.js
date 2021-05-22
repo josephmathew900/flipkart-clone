@@ -24,6 +24,7 @@ import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import UpdateCategoriesModel from './components/UpdateCategoriesModal';
 import AddCategoryModal from './components/AddCategoryModal';
 import './style.css';
+import createCategoryList from '../../helpers/linearCategories';
 
 const Category = (props) => {
   const [show, setShow] = useState(false);
@@ -70,22 +71,6 @@ const Category = (props) => {
       });
     }
     return myCategories;
-  };
-
-  const createCategoryList = (categories, options = []) => {
-    for (let category of categories) {
-      options.push({
-        value: category._id,
-        name: category.name,
-        parentId: category.parentId,
-        type: category.type,
-      });
-      if (category.children && category.children.length > 0) {
-        createCategoryList(category.children, options);
-      }
-    }
-
-    return options;
   };
 
   const handleCategoryImage = (e) => {

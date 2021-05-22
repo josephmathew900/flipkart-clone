@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './containers/Home';
+import NewPage from './containers/NewPage';
 import Signin from './containers/Signin';
 import Signup from './containers/Signup';
 import PrivateRoute from './components/HOC/PrivateRoute';
@@ -28,6 +29,7 @@ const App = () => {
       <Router>
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
+          <PrivateRoute exact path="/page" component={NewPage} />
           <PrivateRoute exact path="/category" component={Category} />
           <PrivateRoute exact path="/products" component={Products} />
           <PrivateRoute exact path="/orders" component={Orders} />
