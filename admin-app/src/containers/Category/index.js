@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import Layout from '../../components/Layout';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategory, addCategory, updateCategories } from '../../actions';
+import {
+  getAllCategory,
+  addCategory,
+  updateCategories,
+  deleteCategories as deleteCategoriesAction,
+} from '../../actions';
 import Input from '../../components/UI/Input';
 import Modal from '../../components/UI/Modal';
 import CheckboxTree from 'react-checkbox-tree';
@@ -24,6 +29,7 @@ const Category = (props) => {
   const [expandedArray, setExpandedArray] = useState([]);
   const [expanded, setExpanded] = useState([]);
   const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
+  const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
 
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
@@ -47,7 +53,9 @@ const Category = (props) => {
         label: category.name,
         value: category._id,
         children:
-          category.children.length && renderCategories(category.children),
+          category.children &&
+          category.children.length > 0 &&
+          renderCategories(category.children),
       });
     }
     return myCategories;
@@ -60,7 +68,7 @@ const Category = (props) => {
         name: category.name,
         parentId: category.parentId,
       });
-      if (category.children.length > 0) {
+      if (category.children && category.children.length > 0) {
         createCategoryList(category.children, options);
       }
     }
@@ -73,7 +81,11 @@ const Category = (props) => {
   };
 
   const updateCategory = () => {
+    updateCheckedAndExpandedCategories();
     setUpdateCategoryModal(true);
+  };
+
+  const updateCheckedAndExpandedCategories = () => {
     const categories = createCategoryList(category.categories);
     const checkedArray = [];
     const expandedArray = [];
@@ -288,6 +300,59 @@ const Category = (props) => {
     );
   };
 
+  const deleteCategory = () => {
+    updateCheckedAndExpandedCategories();
+    setDeleteCategoryModal(true);
+  };
+
+  const deleteCategories = () => {
+    const checkedIdsArray = checkedArray.map((item, index) => ({
+      _id: item.value,
+    }));
+    const expandedIdsArray = expandedArray.map((item, index) => ({
+      _id: item.value,
+    }));
+    const idsArray = expandedIdsArray.concat(checkedIdsArray);
+    dispatch(deleteCategoriesAction(idsArray)).then((result) => {
+      if (result) {
+        dispatch(getAllCategory());
+        setDeleteCategoryModal(false);
+      } else {
+      }
+    });
+  };
+
+  const renderDeleteCategoryModal = () => {
+    return (
+      <Modal
+        modalTitle="Confirm"
+        show={deleteCategoryModal}
+        handleClose={() => setDeleteCategoryModal(false)}
+        buttons={[
+          {
+            label: 'No',
+            color: 'primary',
+            onClick: () => setDeleteCategoryModal(false),
+          },
+          {
+            label: 'Yes',
+            color: 'danger',
+            onClick: deleteCategories,
+          },
+        ]}
+      >
+        <h5>Expanded</h5>
+        {expandedArray.map((item, index) => (
+          <span key={index}>{item.name}</span>
+        ))}
+        <h5>Checked</h5>
+        {checkedArray.map((item, index) => (
+          <span key={index}>{item.name}</span>
+        ))}
+      </Modal>
+    );
+  };
+
   return (
     <Layout sidebar>
       <Container>
@@ -320,7 +385,7 @@ const Category = (props) => {
         </Row>
         <Row>
           <Col>
-            <button>Delete</button>
+            <button onClick={deleteCategory}>Delete</button>
             <button onClick={updateCategory}>Edit</button>
           </Col>
         </Row>
@@ -328,6 +393,7 @@ const Category = (props) => {
 
       {renderAddCategoryModal()}
       {renderUpdateCategoriesModel()}
+      {renderDeleteCategoryModal()}
     </Layout>
   );
 };

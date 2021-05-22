@@ -7,6 +7,7 @@ const {
   addCategory,
   getCategories,
   updateCategories,
+  deleteCategories,
 } = require('../controller/category');
 
 const router = express.Router();
@@ -35,5 +36,6 @@ router.post(
   upload.array('categoryImage'),
   updateCategories
 );
+router.post('/category/delete', deleteCategories);
 
 module.exports = router;
