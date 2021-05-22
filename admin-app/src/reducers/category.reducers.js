@@ -1,4 +1,3 @@
-import { addCategory } from '../actions';
 import { categoryConstants } from '../actions/constants';
 
 const initialState = {
