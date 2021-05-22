@@ -78,6 +78,7 @@ const Category = (props) => {
         value: category._id,
         name: category.name,
         parentId: category.parentId,
+        type: category.type,
       });
       if (category.children && category.children.length > 0) {
         createCategoryList(category.children, options);
@@ -166,14 +167,9 @@ const Category = (props) => {
     const idsArray = expandedIdsArray.concat(checkedIdsArray);
 
     if (checkedIdsArray.length > 0) {
-      dispatch(deleteCategoriesAction(checkedIdsArray)).then((result) => {
-        if (result) {
-          dispatch(getAllCategory());
-          setDeleteCategoryModal(false);
-        } else {
-        }
-      });
+      dispatch(deleteCategoriesAction(checkedIdsArray));
     }
+    setDeleteCategoryModal(false);
   };
 
   const renderDeleteCategoryModal = () => {

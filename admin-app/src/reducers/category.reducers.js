@@ -16,6 +16,7 @@ const buildNewCategories = (parentId, categories, category) => {
         _id: category._id,
         name: category.name,
         slug: category.slug,
+        type: category.type,
         children: [],
       },
     ];
@@ -28,6 +29,7 @@ const buildNewCategories = (parentId, categories, category) => {
         name: category.name,
         slug: category.slug,
         parentId: category.parentId,
+        type: category.type,
         children: category.children,
       };
       myCategories.push({
@@ -94,6 +96,18 @@ const categoryReducer = (state = initialState, action) => {
       };
       break;
     case categoryConstants.UPDATE_CATEGORIES_FAILURE:
+      state = { ...state, loading: false, error: action.payload.error };
+      break;
+    case categoryConstants.DELETE_CATEGORIES_REQUEST:
+      state = { ...state, loading: true };
+      break;
+    case categoryConstants.DELETE_CATEGORIES_SUCCESS:
+      state = {
+        ...state,
+        loading: false,
+      };
+      break;
+    case categoryConstants.DELETE_CATEGORIES_FAILURE:
       state = { ...state, loading: false, error: action.payload.error };
       break;
   }
