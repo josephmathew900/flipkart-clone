@@ -56,7 +56,7 @@ exports.signin = (req, res) => {
         });
       } else {
         return res.status(400).json({
-          message: 'Invalid Password',
+          message: 'Invalid Username/Password',
         });
       }
     } else {

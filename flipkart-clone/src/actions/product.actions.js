@@ -3,7 +3,7 @@ import { productConstants } from './constants';
 
 export const getProductBySlug = (slug) => {
   return async (dispatch) => {
-    const res = await axios.get(`/product/${slug}`);
+    const res = await axios.get(`/products/${slug}`);
     if (res.status == 200) {
       dispatch({
         type: productConstants.GET_ALL_PRODUCTS_BY_SLUG,
@@ -37,6 +37,26 @@ export const getProductPage = (payload) => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+};
+
+export const getProductDetailsById = (payload) => {
+  return async (dispatch) => {
+    dispatch({ type: productConstants.GET_PRODUCT_DETAILS_PAGE_BY_ID_REQUEST });
+    let res;
+    try {
+      const { productId } = payload.params;
+      res = await axios.get(`/product/${productId}`);
+      dispatch({
+        type: productConstants.GET_PRODUCT_DETAILS_PAGE_BY_ID_SUCCESS,
+        payload: { productDetails: res.data.product },
+      });
+    } catch (error) {
+      dispatch({
+        type: productConstants.GET_PRODUCT_DETAILS_PAGE_BY_ID_FAILURE,
+        payload: { error: res.data.error },
+      });
     }
   };
 };
