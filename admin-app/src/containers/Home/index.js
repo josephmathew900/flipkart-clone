@@ -1,4 +1,3 @@
-import { Jumbotron } from 'react-bootstrap';
 import Layout from '../../components/Layout';
 
 const Home = () => {

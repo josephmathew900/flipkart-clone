@@ -18,10 +18,22 @@ const NewPage = (props) => {
   const [products, setProducts] = useState([]);
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
+  const page = useSelector((state) => state.page);
 
   useEffect(() => {
     setCategories(linearCategories(category.categories));
   }, [category]);
+
+  useEffect(() => {
+    if (!page.loading) {
+      setCreateModal(false);
+      setTitle('');
+      setType('');
+      setDescription('');
+      setProducts([]);
+      setBanners([]);
+    }
+  }, [page]);
 
   const onCategoryChange = (e) => {
     const category = categories.find(
@@ -59,7 +71,6 @@ const NewPage = (props) => {
     });
 
     dispatch(createPage(form));
-    setCreateModal(false);
   };
 
   const renderCreatePageModal = () => {
@@ -67,23 +78,20 @@ const NewPage = (props) => {
       <Modal
         show={createModal}
         modalTitle={'Create New Page'}
-        handleClose={submitPageForm}
+        handleClose={() => setCreateModal(false)}
+        onSubmit={submitPageForm}
       >
         <Container>
           <Row>
             <Col>
-              <select
+              <Input
                 className="form-control form-control-sm"
+                type="select"
                 value={categoryId}
+                placeholder={'Select Category'}
+                options={categories}
                 onChange={onCategoryChange}
-              >
-                <option value="">Select Category</option>
-                {categories.map((cat) => (
-                  <option key={cat.value} value={cat.value}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
+              />
             </Col>
           </Row>
           <Row>

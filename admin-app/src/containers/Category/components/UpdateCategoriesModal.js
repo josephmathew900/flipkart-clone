@@ -7,6 +7,7 @@ const UpdateCategoriesModel = (props) => {
     show,
     size,
     handleClose,
+    onSubmit,
     modalTitle,
     expandedArray,
     checkedArray,
@@ -19,6 +20,7 @@ const UpdateCategoriesModel = (props) => {
       modalTitle={modalTitle}
       handleClose={handleClose}
       size={size}
+      onSubmit={onSubmit}
     >
       <Row>
         <Col>
@@ -110,9 +112,12 @@ const UpdateCategoriesModel = (props) => {
                 />
               </Col>
               <Col>
-                <select
-                  value={item.parentId}
+                <Input
+                  type="select"
                   className="form-control"
+                  value={item.parentId}
+                  placeholder="select category"
+                  options={categoryList}
                   onChange={(e) =>
                     handleCategoryInput(
                       'parentId',
@@ -121,14 +126,7 @@ const UpdateCategoriesModel = (props) => {
                       'checked'
                     )
                   }
-                >
-                  <option>select category</option>
-                  {categoryList.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.name}
-                    </option>
-                  ))}
-                </select>
+                />
               </Col>
               <Col>
                 <select

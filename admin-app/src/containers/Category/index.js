@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  getAllCategory,
   addCategory,
   updateCategories,
   deleteCategories as deleteCategoriesAction,
 } from '../../actions';
-import Input from '../../components/UI/Input';
+
 import Modal from '../../components/UI/Modal';
 import CheckboxTree from 'react-checkbox-tree';
 import {
@@ -41,11 +40,18 @@ const Category = (props) => {
   const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
-  const handleClose = () => {
-    // if (categoryName === '') {
-    //   alert('Name is required');
-    //   return;
-    // }
+  useEffect(() => {
+    if (!category.loading) {
+      setShow(false);
+    }
+  }, [category.loading]);
+
+  const addCategoryForm = () => {
+    if (categoryName === '') {
+      alert('Name is required');
+      setShow(false);
+      return;
+    }
 
     const form = new FormData();
     form.append('name', categoryName);
@@ -237,7 +243,8 @@ const Category = (props) => {
       <AddCategoryModal
         show={show}
         modalTitle={'Add New Category'}
-        handleClose={handleClose}
+        handleClose={() => setShow(false)}
+        onSubmit={addCategoryForm}
         categoryName={categoryName}
         setCategoryName={setCategoryName}
         parentCategoryId={parentCategoryId}
@@ -247,7 +254,8 @@ const Category = (props) => {
       />
       <UpdateCategoriesModel
         show={updateCategoryModal}
-        handleClose={updateCategoriesForm}
+        handleClose={() => setUpdateCategoryModal(false)}
+        onSubmit={updateCategoriesForm}
         modalTitle={'Update Categories'}
         size="lg"
         expandedArray={expandedArray}
