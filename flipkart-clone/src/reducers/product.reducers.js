@@ -9,6 +9,9 @@ const initialState = {
     under20k: [],
     under30k: [],
   },
+  pageRequest: false,
+  page: {},
+  error: null,
 };
 
 const productReducer = (state = initialState, action) => {
@@ -19,6 +22,15 @@ const productReducer = (state = initialState, action) => {
         products: action.payload.products,
         productsByPrice: { ...action.payload.productsByPrice },
       };
+      break;
+    case productConstants.GET_PRODUCT_PAGE_REQUEST:
+      state = { ...state, pageRequest: true };
+      break;
+    case productConstants.GET_PRODUCT_PAGE_SUCCESS:
+      state = { ...state, pageRequest: false, page: action.payload.page };
+      break;
+    case productConstants.GET_PRODUCT_PAGE_FAILURE:
+      state = { ...state, pageRequest: false, error: action.payload.error };
       break;
   }
   return state;

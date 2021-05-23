@@ -27,6 +27,7 @@ const NewPage = (props) => {
   useEffect(() => {
     if (!page.loading) {
       setCreateModal(false);
+      setCategoryId('');
       setTitle('');
       setType('');
       setDescription('');
@@ -48,7 +49,7 @@ const NewPage = (props) => {
   };
 
   const handleProductImages = (e) => {
-    setProducts(e.target.files[0]);
+    setProducts([...products, e.target.files[0]]);
   };
 
   const submitPageForm = () => {
