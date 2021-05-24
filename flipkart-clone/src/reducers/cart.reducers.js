@@ -38,7 +38,9 @@ export default (state = initState, action) => {
       break;
     case cartConstants.RESET_CART:
       state = {
-        ...initState,
+        cartItems: {},
+        updatingCart: false,
+        error: null,
       };
   }
   return state;

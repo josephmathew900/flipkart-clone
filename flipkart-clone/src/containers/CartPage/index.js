@@ -19,11 +19,11 @@ const CartPage = (props) => {
     setCartItems(cart.cartItems);
   }, [cart.cartItems]);
 
-  // useEffect(() => {
-  //   if (auth.authenticate) {
-  //     dispatch(getCartItems());
-  //   }
-  // }, [auth.authenticate]);
+  useEffect(() => {
+    if (auth.authenticate) {
+      dispatch(getCartItems());
+    }
+  }, [auth.authenticate]);
 
   const onQuantityIncrement = (_id) => {
     const { name, price, img } = cartItems[_id];
