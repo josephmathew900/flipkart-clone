@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getAllCategory } from '../../actions';
 import './style.css';
 
@@ -17,12 +18,12 @@ const MenuHeader = (props) => {
       myCategories.push(
         <li key={category.name}>
           {category.parentId ? (
-            <a
-              href={`/${category.slug}?cid=${category._id}&type=${category.type}`}
+            <Link
+              to={`/${category.slug}?cid=${category._id}&type=${category.type}`}
             >
               {' '}
               {category.name}
-            </a>
+            </Link>
           ) : (
             <span>{category.name}</span>
           )}
