@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { login, signout } from '../../actions';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const Header = (props) => {
   const [loginModal, setLoginModal] = useState(false);
@@ -184,10 +185,10 @@ const Header = (props) => {
             ]}
           />
           <div>
-            <div onClick={() => history.push('/cart')} className="cart">
+            <Link to="/cart" className="cart">
               <IoIosCart />
               <span style={{ margin: '0 10px' }}>Cart</span>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

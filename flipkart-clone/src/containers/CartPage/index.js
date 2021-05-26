@@ -39,20 +39,20 @@ const CartPage = (props) => {
   //   dispatch(removeCartItem({ productId: _id }));
   // };
 
-  // if (props.onlyCartItems) {
-  //   return (
-  //     <>
-  //       {Object.keys(cartItems).map((key, index) => (
-  //         <CartItem
-  //           key={index}
-  //           cartItem={cartItems[key]}
-  //           // onQuantityInc={onQuantityIncrement}
-  //           // onQuantityDec={onQuantityDecrement}
-  //         />
-  //       ))}
-  //     </>
-  //   );
-  // }
+  if (props.onlyCartItems) {
+    return (
+      <>
+        {Object.keys(cartItems).map((key, index) => (
+          <CartItem
+            key={index}
+            cartItem={cartItems[key]}
+            onQuantityInc={onQuantityIncrement}
+            onQuantityDec={onQuantityDecrement}
+          />
+        ))}
+      </>
+    );
+  }
 
   return (
     <Layout>
