@@ -1,5 +1,6 @@
 const Category = require('../../models/category');
 const Product = require('../../models/product');
+const Order = require('../../models/order');
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -10,14 +11,14 @@ function createCategories(categories, parentId = null) {
     category = categories.filter((cat) => cat.parentId == parentId);
   }
 
-  for (let cat of category) {
+  for (let cate of category) {
     categoryList.push({
-      _id: cat._id,
-      name: cat.name,
-      slug: cat.slug,
-      parentId: cat.parentId,
-      type: cat.type,
-      children: createCategories(categories, cat._id),
+      _id: cate._id,
+      name: cate.name,
+      slug: cate.slug,
+      parentId: cate.parentId,
+      type: cate.type,
+      children: createCategories(categories, cate._id),
     });
   }
 
@@ -26,13 +27,16 @@ function createCategories(categories, parentId = null) {
 
 exports.initialData = async (req, res) => {
   const categories = await Category.find({}).exec();
-  const products = await Product.find({})
-    .select('_id name price quantity description productPictures category')
+  const products = await Product.find({ createdBy: req.user._id })
+    .select('_id name price quantity slug description productPictures category')
     .populate({ path: 'category', select: '_id name' })
     .exec();
-
+  const orders = await Order.find({})
+    .populate('items.productId', 'name')
+    .exec();
   res.status(200).json({
     categories: createCategories(categories),
     products,
+    orders,
   });
 };
