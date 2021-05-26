@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -25,17 +24,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    offer: {
-      type: Number,
-    },
+    offer: { type: Number },
     productPictures: [{ img: { type: String } }],
     reviews: [
       {
-        userId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
-          required: true,
-        },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         review: String,
       },
     ],
@@ -49,9 +42,7 @@ const productSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    updatedAt: {
-      type: Date,
-    },
+    updatedAt: Date,
   },
   { timestamps: true }
 );
