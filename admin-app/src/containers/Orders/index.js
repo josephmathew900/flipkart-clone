@@ -8,13 +8,13 @@ import './style.css';
 
 const Orders = (props) => {
   const order = useSelector((state) => state.order);
-  const [type, setType] = useState('');
+  const [type, setType] = useState({});
   const dispatch = useDispatch();
 
   const onOrderUpdate = (orderId) => {
     const payload = {
       orderId,
-      type,
+      type: type[orderId],
     };
     dispatch(updateOrder(payload));
   };
@@ -100,7 +100,11 @@ const Orders = (props) => {
                 boxSizing: 'border-box',
               }}
             >
-              <select onChange={(e) => setType(e.target.value)}>
+              <select
+                onChange={(e) =>
+                  setType({ ...type, [orderItem._id]: e.target.value })
+                }
+              >
                 <option value={''}>select status</option>
                 {orderItem.orderStatus.map((status) => {
                   return (
