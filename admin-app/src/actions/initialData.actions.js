@@ -24,6 +24,5 @@ export const getInitialData = () => {
         payload: { orders },
       });
     }
-    console.log(res);
   };
 };

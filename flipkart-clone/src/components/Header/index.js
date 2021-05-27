@@ -11,7 +11,7 @@ import {
 } from '../MaterialUI';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, signout, getCartItems, signup as _signup } from '../../actions';
-import Cart from '../UI/cart';
+import Cart from '../UI/Cart';
 
 const Header = (props) => {
   const [loginModal, setLoginModal] = useState(false);

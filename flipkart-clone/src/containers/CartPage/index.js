@@ -4,7 +4,7 @@ import Layout from '../../components/Layout';
 import Card from '../../components/UI/Card';
 import CartItem from './CartItem';
 import { addToCart, getCartItems, removeCartItem } from '../../actions';
-// import PriceDetails from '../../components/PriceDetails';
+import PriceDetails from '../../components/PriceDetails';
 
 import './style.css';
 import { MaterialButton } from '../../components/MaterialUI';
@@ -35,9 +35,9 @@ const CartPage = (props) => {
     dispatch(addToCart({ _id, name, price, img }, -1));
   };
 
-  // const onRemoveCartItem = (_id) => {
-  //   dispatch(removeCartItem({ productId: _id }));
-  // };
+  const onRemoveCartItem = (_id) => {
+    dispatch(removeCartItem({ productId: _id }));
+  };
 
   if (props.onlyCartItems) {
     return (
@@ -68,7 +68,7 @@ const CartPage = (props) => {
               cartItem={cartItems[key]}
               onQuantityInc={onQuantityIncrement}
               onQuantityDec={onQuantityDecrement}
-              // onRemoveCartItem={onRemoveCartItem}
+              onRemoveCartItem={onRemoveCartItem}
             />
           ))}
 
@@ -91,7 +91,7 @@ const CartPage = (props) => {
             </div>
           </div>
         </Card>
-        {/* <PriceDetails
+        <PriceDetails
           totalItem={Object.keys(cart.cartItems).reduce(function (qty, key) {
             return qty + cart.cartItems[key].qty;
           }, 0)}
@@ -99,7 +99,7 @@ const CartPage = (props) => {
             const { price, qty } = cart.cartItems[key];
             return totalPrice + price * qty;
           }, 0)}
-        /> */}
+        />
       </div>
     </Layout>
   );

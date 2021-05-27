@@ -25,10 +25,9 @@ export const signup = (user) => {
         dispatch({ type: authConstants.SIGNUP_FAILURE, payload: { error } });
       }
     } catch (error) {
-      const { data } = error.response;
       dispatch({
         type: authConstants.SIGNUP_FAILURE,
-        payload: { error: data.error },
+        payload: { error },
       });
     }
   };

@@ -61,7 +61,6 @@ exports.getCartItems = (req, res) => {
     .exec((error, cart) => {
       if (error) return res.status(400).json({ error });
       if (cart) {
-        console.log(cart);
         let cartItems = {};
         cart.cartItems.forEach((item, index) => {
           cartItems[item.product._id.toString()] = {
@@ -75,4 +74,25 @@ exports.getCartItems = (req, res) => {
         res.status(200).json({ cartItems });
       }
     });
+};
+
+exports.removeCartItems = (req, res) => {
+  const { productId } = req.body.payload;
+  if (productId) {
+    Cart.update(
+      { user: req.user._id },
+      {
+        $pull: {
+          cartItems: {
+            product: productId,
+          },
+        },
+      }
+    ).exec((error, result) => {
+      if (error) return res.status(400).json({ error });
+      if (result) {
+        res.status(202).json({ result });
+      }
+    });
+  }
 };

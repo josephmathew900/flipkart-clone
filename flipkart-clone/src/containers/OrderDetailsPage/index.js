@@ -3,21 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOrder } from '../../actions';
 import Layout from '../../components/Layout';
 import Card from '../../components/UI/Card';
-import Price from '../../components/UI/Price';
+import Price from '../../components/UI/price';
 
 import './style.css';
-
-/**
- * @author
- * @function OrderDetails
- **/
 
 const OrderDetailsPage = (props) => {
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.user.orderDetails);
 
   useEffect(() => {
-    console.log({ props });
     const payload = {
       orderId: props.match.params.orderId,
     };
